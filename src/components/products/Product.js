@@ -10,13 +10,16 @@ export default function Product(productT) {
     };
 
     const conditionalBtn = () => {
-        const isin = productT.isCart;
-        const ye = isin.filter((e) => e.id === id);
+        const isIn = productT.isCart;
+        const ye = isIn.filter((e) => e.id === id);
         if (ye.length === 0) {
             return <Button onClick={() => productT.cartFun(productT.productT)}>Add To Cart</Button>;
         }
         return (
-            <Button onClick={() => productT.RemoveFromCart(productT.productT)}>
+            <Button
+                onClick={() => productT.RemoveFromCart(productT.productT)}
+                className="removeBtn"
+            >
                 Already In Cart
             </Button>
         );

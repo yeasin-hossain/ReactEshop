@@ -4,6 +4,7 @@ import Cart from './cart/Cart';
 import './products.scss';
 import Product from './products/Product';
 
+// Fetch the product and add into state
 const Products = () => {
     const [product, setProduct] = useState([]);
     useEffect(
@@ -15,17 +16,17 @@ const Products = () => {
         },
         []
     );
+    // Add into cart
     const [cartProduct, setCartProduct] = useState([]);
     const cartFun = (e) => {
         setCartProduct([...cartProduct, e]);
     };
+    // Remove from cart
     const RemoveFromCart = (e) => {
-        console.log(e);
         const removedItem = cartProduct.filter((item) => e.id !== item.id);
-        console.log(removedItem);
         setCartProduct(removedItem);
-        console.log(cartProduct);
     };
+    // Custom CSS
     const flex = {
         display: 'flex',
         flexWrap: 'wrap',
@@ -33,6 +34,7 @@ const Products = () => {
     return (
         <Container>
             <Row>
+                {/* Display Single Product Component */}
                 <Col xs="8" style={flex}>
                     {product.map((pro) => (
                         <Product
@@ -44,6 +46,7 @@ const Products = () => {
                         />
                     ))}
                 </Col>
+                {/* Cart Option */}
                 <Col xs="4" className="cart">
                     <Cart cartItems={cartProduct} />
                 </Col>
