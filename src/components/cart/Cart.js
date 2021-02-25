@@ -3,6 +3,8 @@ import './cart.scss';
 
 export default function Cart(cartItems) {
     const cartItem = cartItems.cartItems;
+    // const [cartItem] = useState(cartItems.cartItems);
+
     const totalPrice = cartItem.reduce((total, price) => total + price.price, 0);
     return (
         <div>

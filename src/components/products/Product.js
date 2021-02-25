@@ -3,10 +3,23 @@ import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } fr
 import './product.scss';
 
 export default function Product(productT) {
-    const { image, title, price, description } = productT.productT;
+    const { image, title, price, description, id } = productT.productT;
     const ShortDes = () => {
         const arrDes = description.split(' ');
         return arrDes.splice(0, 25);
+    };
+
+    const conditionalBtn = () => {
+        const isin = productT.isCart;
+        const ye = isin.filter((e) => e.id === id);
+        if (ye.length === 0) {
+            return <Button onClick={() => productT.cartFun(productT.productT)}>Add To Cart</Button>;
+        }
+        return (
+            <Button onClick={() => productT.RemoveFromCart(productT.productT)}>
+                Already In Cart
+            </Button>
+        );
     };
     return (
         <div style={{ width: '40%', margin: '25px' }}>
@@ -19,7 +32,8 @@ export default function Product(productT) {
                     </CardSubtitle>
                     {/* <CardText>{description}</CardText> */}
                     <CardText>{ShortDes()}</CardText>
-                    <Button onClick={() => productT.cartFun(productT.productT)}>Add To Cart</Button>
+                    {conditionalBtn()}
+                    {/* <Button onClick={() => productT.cartFun(productT.productT)}>Add To Cart</Button> */}
                 </CardBody>
             </Card>
         </div>

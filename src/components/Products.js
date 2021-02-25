@@ -10,7 +10,7 @@ const Products = () => {
         () => async () => {
             const callProduct = await fetch('https://fakestoreapi.com/products');
             const allProducts = await callProduct.json();
-            console.log(allProducts);
+            // console.log(allProducts);
             setProduct(allProducts);
         },
         []
@@ -19,7 +19,13 @@ const Products = () => {
     const cartFun = (e) => {
         setCartProduct([...cartProduct, e]);
     };
-
+    const RemoveFromCart = (e) => {
+        console.log(e);
+        const removedItem = cartProduct.filter((item) => e.id !== item.id);
+        console.log(removedItem);
+        setCartProduct(removedItem);
+        console.log(cartProduct);
+    };
     const flex = {
         display: 'flex',
         flexWrap: 'wrap',
@@ -29,7 +35,13 @@ const Products = () => {
             <Row>
                 <Col xs="8" style={flex}>
                     {product.map((pro) => (
-                        <Product key={pro.id} productT={pro} cartFun={cartFun} />
+                        <Product
+                            key={pro.id}
+                            productT={pro}
+                            cartFun={cartFun}
+                            RemoveFromCart={RemoveFromCart}
+                            isCart={cartProduct}
+                        />
                     ))}
                 </Col>
                 <Col xs="4" className="cart">
