@@ -17,7 +17,6 @@ const Products = () => {
             setProduct(allProducts);
         };
         callApi();
-        console.log('hooks');
         if (callApi) {
             setCallApis(null);
         }
