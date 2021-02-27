@@ -7,6 +7,8 @@ import Search from './search/Search';
 // Fetch the product and add into state
 const Products = () => {
     const [product, setProduct] = useState([]);
+
+    const [callApis, setCallApis] = useState(null);
     useEffect(() => {
         const callApi = async () => {
             const callProduct = await fetch('https://fakestoreapi.com/products');
@@ -15,25 +17,45 @@ const Products = () => {
             setProduct(allProducts);
         };
         callApi();
-    }, []);
+        console.log('hooks');
+        if (callApi) {
+            setCallApis(null);
+        }
+    }, [callApis]);
+
     // Search Option
-    const [searchQuery, setSearchQuery] = useState('');
+    // const [searchQuery, setSearchQuery] = useState('');
     const SearchOption = (query) => {
         console.log('Clg From Products', query);
-        setSearchQuery(query);
-        const newSearch = product.filter((q) => q.title.includes(searchQuery));
-        setProduct(newSearch);
+        // setSearchQuery(query);
+        // const newSearch = product.filter((q) => q.title === query);
+        // searchQuery(newSearch);
+        const td = product.map((s) =>
+            // {
+            //     if (s.title.toLowerCase().search(query.toLowerCase()) > 0) {
+            //         return s;
+            //     }
+            //     return '';
+            // }
+
+            s.title.toLowerCase().search(query.toLowerCase()) > 0 ? s : ''
+        );
+
+        // console.log(td);
+        const final = td.filter((e) => e.length !== 0);
+        console.log(final);
+        setProduct(final);
+        if (query.length === 0) {
+            setCallApis(true);
+            console.log(query.length, final.length, callApis);
+        } else {
+            console.log('ok');
+        }
+        // if (final.length === 0) {
+        //     console.log('Sorry Not Found');
+        // }
     };
-    // useEffect(
-    //     () => async () => {
-    //         console.log(product);
-    //         const callProduct = await fetch('https://fakestoreapi.com/products');
-    //         const allProducts = await callProduct.json();
-    //         // console.log(allProducts);
-    //         setProduct(allProducts);
-    //     },
-    //     [product, searchQuery]
-    // );
+
     // Add into cart
     const [cartProduct, setCartProduct] = useState([]);
     const cartFun = (e) => {
